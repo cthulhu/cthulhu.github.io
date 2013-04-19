@@ -98,3 +98,8 @@ I perfer unicorn, but you might want to consider another option. Actualy I'm qui
 Unicorn able to listen UNIX sockets, that's very handy and we can start multiple workers for our application and connect to nginx's upstream.
 
 Our application will be located at /home/#{username}/application/#{application_name}, so socket location will be /home/#{username}/application/#{application_name}/shared/sockets/uncorn.sock. 
+
+Don't forget to add nginx user to you #{username} group. For example, for user deployer it will be:
+
+    sudo usermod -a -G deployer nginx
+

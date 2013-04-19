@@ -2,7 +2,7 @@
 #      Main Configs       #
 # ----------------------- #
 
-url: http://io0001.com
+url: http://cthulhu.github.com/cthulhu
 title: IO0001
 subtitle: Programming languages, web development, "hight loads", "big data" and more
 author: Stanislav O. Pogrebnyak
@@ -58,7 +58,7 @@ default_asides: [asides/recent_posts.html, asides/github.html, asides/twitter.ht
 # ----------------------- #
 
 # Github repositories
-github_user:
+github_user: cthulhu
 github_repo_count: 0
 github_show_profile_link: true
 github_skip_forks: true
