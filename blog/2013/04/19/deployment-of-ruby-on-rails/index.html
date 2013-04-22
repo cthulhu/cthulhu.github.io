@@ -5,7 +5,7 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>IO0001</title>
+  <title>Deployment of Ruby On Rails - IO0001</title>
   <meta name="author" content="Stanislav O. Pogrebnyak">
 
   
@@ -18,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://cthulhu.github.com/cthulhu/">
+  <link rel="canonical" href="http://cthulhu.github.com/cthulhu/blog/2013/04/19/deployment-of-ruby-on-rails/">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/javascripts/modernizr-2.0.js"></script>
@@ -62,15 +62,12 @@
 </nav>
   <div id="main">
     <div id="content">
-      <div class="blog-index">
+      <div>
+<article class="hentry" role="article">
   
-  
-  
-    <article>
-      
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2013/04/19/deployment-of-ruby-on-rails/">Deployment of Ruby on Rails</a></h1>
+      <h1 class="entry-title">Deployment of Ruby on Rails</h1>
     
     
       <p class="meta">
@@ -88,14 +85,14 @@
 
 <time datetime="2013-04-19T01:17:00+03:00" pubdate data-updated="true">Apr 19<span>th</span>, 2013</time>
         
-         | <a href="/blog/2013/04/19/deployment-of-ruby-on-rails/#disqus_thread">Comments</a>
+         | <a href="#disqus_thread">Comments</a>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p>From time to time I need to refresh a guide of Rails application production environment deployment.</p>
+<div class="entry-content"><p>From time to time I need to refresh a guide of Rails application production environment deployment.</p>
 
 <p>My favourite OS is Linux Ubuntu. I prefer to use LTS versions, and today&#8217;s LTS is 12.04 Precise Pangolin. You can download server distribution from <a href="http://ubuntu.com">Ubuntu official site</a>.</p>
 
@@ -223,22 +220,16 @@ mysql -u root -p -e "GRANT ALL PRIVILEGES ON application_production.* TO 'applic
 
 <p>That&#8217;s it. Since now I have step by step tutorial, I will try to compose a chef recipes for that.</p>
 </div>
-  
-  
 
 
-    </article>
-  
-  
-    <article>
+  <footer>
+    <p class="meta">
       
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/03/04/elastic-mapreduce-using-streaming-and-ruby/">Elastic MapReduce Using Streaming and Ruby</a></h1>
-    
-    
-      <p class="meta">
-        
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Stanislav O. Pogrebnyak</span></span>
+
+      
 
 
 
@@ -250,40 +241,46 @@ mysql -u root -p -e "GRANT ALL PRIVILEGES ON application_production.* TO 'applic
   
 
 
-<time datetime="2013-03-04T01:57:00+02:00" pubdate data-updated="true">Mar 4<span>th</span>, 2013</time>
-        
-         | <a href="/blog/2013/03/04/elastic-mapreduce-using-streaming-and-ruby/#disqus_thread">Comments</a>
-        
-      </p>
+<time datetime="2013-04-19T01:17:00+03:00" pubdate data-updated="true">Apr 19<span>th</span>, 2013</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/mysql/'>MySQL</a>, <a class='category' href='/blog/categories/nginx/'>Nginx</a>, <a class='category' href='/blog/categories/ruby/'>Ruby</a>, <a class='category' href='/blog/categories/rubyonrails/'>RubyOnRails</a>, <a class='category' href='/blog/categories/ubuntu-12-04/'>Ubuntu 12.04</a>
+  
+</span>
+
+
+    </p>
     
-  </header>
-
-
-  <div class="entry-content"><p>Before we will start to work on the topic itself here are some requirements you need to know to understand the workarround:</p>
-
-<ul>
-<li>  Ruby - we will take 1.9.3-head version</li>
-<li>  Amazon Web Services account - if you don&#8217;t have one please create, subscribe for EMR(Elastic MapReduce) and S3</li>
-</ul>
-
-
-<h2>Goal</h2>
-
-<p>The main goal is to be able to process huge amount of data (we will take log files from nginx server from one of my applications) and generate statistic.
-We will investigate amount of hits per browser families per day. I would like to note that it is just an example of how you can use amazon EMR for such kind of cases.</p>
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://cthulhu.github.com/cthulhu/blog/2013/04/19/deployment-of-ruby-on-rails/" data-via="pogrebnyak" data-counturl="http://cthulhu.github.com/cthulhu/blog/2013/04/19/deployment-of-ruby-on-rails/" >Tweet</a>
+  
+  
+  <div class="g-plusone" data-size="medium"></div>
+  
+  
 </div>
-  
-  
 
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2013/03/04/elastic-mapreduce-using-streaming-and-ruby/" title="Previous Post: Elastic MapReduce using streaming and ruby">&laquo; Elastic MapReduce using streaming and ruby</a>
+      
+      
+    </p>
+  </footer>
+</article>
 
-    </article>
-  
-  <div class="pagination">
-    
-    <a href="/blog/archives">Blog Archives</a>
-    
-  </div>
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 </div>
+  </section>
+
+</div>
+
 <aside class="sidebar">
   
     <section>
@@ -304,7 +301,7 @@ We will investigate amount of hits per browser families per day. I would like to
 <section>
   <h1>GitHub Repos</h1>
   <ul id="gh_repos">
-    <li class="loading">Status updating&#8230;</li>
+    <li class="loading">Status updating...</li>
   </ul>
   
   <a href="https://github.com/cthulhu">@cthulhu</a> on GitHub
@@ -334,7 +331,7 @@ We will investigate amount of hits per browser families per day. I would like to
 <section>
   <h1>Latest Tweets</h1>
   <ul id="tweets">
-    <li class="loading">Status updating&#8230;</li>
+    <li class="loading">Status updating...</li>
   </ul>
   <script type="text/javascript">
     $.domReady(function(){
@@ -363,6 +360,7 @@ We will investigate amount of hits per browser families per day. I would like to
   
 </aside>
 
+
     </div>
   </div>
   <footer role="contentinfo"><p>
@@ -377,7 +375,10 @@ We will investigate amount of hits per browser families per day. I would like to
       var disqus_shortname = 'io0001';
       
         
-        var disqus_script = 'count.js';
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://cthulhu.github.com/cthulhu/blog/2013/04/19/deployment-of-ruby-on-rails/';
+        var disqus_url = 'http://cthulhu.github.com/cthulhu/blog/2013/04/19/deployment-of-ruby-on-rails/';
+        var disqus_script = 'embed.js';
       
     (function () {
       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;

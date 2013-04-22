@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: AWS | IO0001]]></title>
+  <link href="http://cthulhu.github.com/cthulhu/blog/categories/aws/atom.xml" rel="self"/>
+  <link href="http://cthulhu.github.com/cthulhu/"/>
+  <updated>2013-04-22T23:40:19+03:00</updated>
+  <id>http://cthulhu.github.com/cthulhu/</id>
+  <author>
+    <name><![CDATA[Stanislav O. Pogrebnyak]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Elastic MapReduce using streaming and ruby]]></title>
+    <link href="http://cthulhu.github.com/cthulhu/blog/2013/03/04/elastic-mapreduce-using-streaming-and-ruby/"/>
+    <updated>2013-03-04T01:57:00+02:00</updated>
+    <id>http://cthulhu.github.com/cthulhu/blog/2013/03/04/elastic-mapreduce-using-streaming-and-ruby</id>
+    <content type="html"><![CDATA[<p>Before we will start to work on the topic itself here are some requirements you need to know to understand the workarround:</p>
+
+<ul>
+<li>  Ruby - we will take 1.9.3-head version</li>
+<li>  Amazon Web Services account - if you don't have one please create, subscribe for EMR(Elastic MapReduce) and S3</li>
+</ul>
+
+
+<h2>Goal</h2>
+
+<p>The main goal is to be able to process huge amount of data (we will take log files from nginx server from one of my applications) and generate statistic.
+We will investigate amount of hits per browser families per day. I would like to note that it is just an example of how you can use amazon EMR for such kind of cases.</p>
+]]></content>
+  </entry>
+  
+</feed>
