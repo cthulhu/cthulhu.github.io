@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[IO0001]]></title>
+  <link href="http://cthulhu.github.com/cthulhu/atom.xml" rel="self"/>
+  <link href="http://cthulhu.github.com/cthulhu/"/>
+  <updated>2013-04-23T03:13:38+03:00</updated>
+  <id>http://cthulhu.github.com/cthulhu/</id>
+  <author>
+    <name><![CDATA[Stanislav O. Pogrebnyak]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Deployment of Ruby On Rails]]></title>
+    <link href="http://cthulhu.github.com/cthulhu/blog/2013/04/19/deployment-of-ruby-on-rails/"/>
+    <updated>2013-04-19T01:17:00+03:00</updated>
+    <id>http://cthulhu.github.com/cthulhu/blog/2013/04/19/deployment-of-ruby-on-rails</id>
+    <content type="html"><![CDATA[<p>From time to time I need to refresh a guide of Rails application production environment deployment.</p>
+
+<p>My favourite OS is Linux Ubuntu. I prefer to use LTS versions, and today&#8217;s LTS is 12.04 Precise Pangolin. You can download server distribution from <a href="http://ubuntu.com">Ubuntu official site</a>.</p>
+
+<p>I will not cover OS installation process, since that&#8217;s quite trivial and there are a lot of tutorials in the Internet about that. Besides, I can imagine that OS already installed on your VPS/PS/ whatever you have.</p>
+
+<p><em>Note:</em> You might want to use chef or puppets for deployment automatization. And you are absolutelly right - recipes are the best way to DRY that as well. I will definitely go for it at some point.</p>
+
+<p>So you have installed OS and logged in to the server via ssh.</p>
+
+<p><em>Note:</em> Don&#8217;t forget to disable passworded authorization and root login for your ssh server. Also it&#8217;s nice to change ssh port from default one to something else, so the hackers will not be able to use simples atacks.</p>
+
+<pre><code>sudo sed -i "/^Port / c Port 22222" /etc/ssh/sshd_config
+sudo sed -i "/^PermitRootLogin / c PermitRootLogin no" /etc/ssh/sshd_config
+</code></pre>
+
+<p>Here is a set of commands you need to execute to install/configure needed software.</p>
+
+<p>Let&#8217;s make our system up to date:</p>
+
+<pre><code>sudo apt-get update &amp;&amp; sudo apt-get upgrade
+</code></pre>
+
+<p>Now let&#8217;s install software we will use (Git, compilers, archivers etc):</p>
+
+<pre><code>sudo apt-get install git-core build-essential zlib1g-dev libssl-dev vim mc htop libmysqlclient-dev curl git-core ruby libpcre3-dev libxml2-dev libxml2 libxslt1-dev imagemagick libmagickcore-dev libmagickwand-dev autoconf byacc mysql-client libmysql-ruby libmysqlclient15-dev libmysqlclient-dev libmagickwand-dev imagemagick libmagickcore-dev zip screen curl nodejs install -y ghostscript imagemagick ffmpeg -y 
+</code></pre>
+
+<p>Now we need a web server. Personally I perfer nginx. It is fast, easy to use and configure. Someone prefers to installing from packages but I always do that from sources, since I can get the latest one and also I can configure modules I need.</p>
+
+<p>So let&#8217;s get it (at the moment of that blog the latest stable release is 1.2.8):</p>
+
+<pre><code>sudo useradd -s /usr/sbin/nologin nginx
+cd ~
+wget http://nginx.org/download/nginx-1.2.8.tar.gz
+tar -xvf nginx-1.2.8.tar.gz
+cd nginx-1.2.8
+./configure --prefix='/opt/nginx' --with-http_ssl_module --with-http_gzip_static_module --with-cc-opt='-Wno-error' --with-http_stub_status_module
+make
+sudo make install
+cd ..
+rm nginx-1.2.8 -rf
+rm nginx-1.2.8.tar.gz
+</code></pre>
+
+<p>Few words about build configuration:</p>
+
+<pre><code>--with-http_ssl_module - Application hosted there will have ssl encryption
+
+--with-http_stub_status_module - I will use munin nginx-* plugins for requests monitoring etc.
+</code></pre>
+
+<p>You can read more about nginx configuration on <a href="http://nginx.org/">official site</a></p>
+
+<p>Now we need a startup script (I have a gist for that):</p>
+
+<div><script src='https://gist.github.com/5420306.js'></script>
+<noscript><pre><code></code></pre></noscript></div>
+
+
+<pre><code>cd ~
+git clone https://gist.github.com/5420306.git
+sudo cp 5420306/nginx /etc/init.d/nginx
+sudo chmod 0755 /etc/init.d/nginx
+rm 5420306 -rf
+</code></pre>
+
+<p>Now let&#8217;s get ruby. I would recomend to use rvm even in production environment, since it will bring some flexibility to your setup. Also I recomend to use per user rvm installation rather than system wide.</p>
+
+<pre><code> \curl -#L https://get.rvm.io | bash -s stable
+</code></pre>
+
+<p>Let&#8217;s apply changes:</p>
+
+<pre><code>source ~/.bashrc
+</code></pre>
+
+<p>And install latest (production) ruby version:</p>
+
+<pre><code>rvm install 1.9.3-p392
+</code></pre>
+
+<p>I prefer to install release number rather than head. Since it&#8217;s quite clear how to upgrade in case of new versions.</p>
+
+<p>Now gemset (I prefer to use before setup hook for capistrano) but this also will work:</p>
+
+<pre><code>rvm use 1.9.3@appname --create
+</code></pre>
+
+<p>Now let&#8217;s connect nginx to our rails application. We can do that using several approaches (web servers). By popularity ATM:</p>
+
+<ul>
+<li><a href="http://code.macournoyer.com/thin/">Thin</a></li>
+<li><a href="https://www.phusionpassenger.com/">Passenger</a></li>
+<li><a href="http://unicorn.bogomips.org/">Unicorn</a></li>
+<li><a href="http://pow.cx/">Pow</a></li>
+<li><a href="http://puma.io/">Puma</a></li>
+<li><a href="http://rainbows.rubyforge.org/">Rainbows</a> - Unicorn fork</li>
+<li>Other options</li>
+</ul>
+
+
+<p>I perfer unicorn, but you might want to consider another option. Actualy I&#8217;m quite happy to have so much choices. Not every platform have such a wide range of different solutions.</p>
+
+<p>Unicorn is able to listen UNIX sockets, that&#8217;s very handy and we can start multiple workers for our application and connect to nginx&#8217;s upstream.</p>
+
+<p>Our application will be located at /home/#{username}/application/#{application_name}, so socket location will be /home/#{username}/application/#{application_name}/shared/sockets/uncorn.sock.</p>
+
+<p>Don&#8217;t forget to add nginx user to your #{username} group. For example, for user &#8216;deployer&#8217; it will be:</p>
+
+<pre><code>sudo usermod -a -G deployer nginx
+</code></pre>
+
+<p>Last stage is database. I use mysql in most cases. Here how you can get it:</p>
+
+<pre><code>sudo apt-get install mysql-server mysql-client mysql-common
+</code></pre>
+
+<p>I will not cover mysql configuration here, since It is really depends on your cases.
+Let&#8217;s created database and user:</p>
+
+<pre><code>mysql -u root -p -e "CREATE DATABASE \`application_production\` CHARACTER SET utf8 COLLATE utf8_general_ci;"
+mysql -u root -p -e "CREATE USER 'application'@'localhost' IDENTIFIED BY 'some_pass';"
+mysql -u root -p -e "GRANT ALL PRIVILEGES ON application_production.* TO 'application'@'localhost' WITH GRANT OPTION;""
+</code></pre>
+
+<p>That&#8217;s it. Since now I have step by step tutorial, I will try to compose a chef recipes for that.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Elastic MapReduce using streaming and ruby]]></title>
+    <link href="http://cthulhu.github.com/cthulhu/blog/2013/03/04/elastic-mapreduce-using-streaming-and-ruby/"/>
+    <updated>2013-03-04T01:57:00+02:00</updated>
+    <id>http://cthulhu.github.com/cthulhu/blog/2013/03/04/elastic-mapreduce-using-streaming-and-ruby</id>
+    <content type="html"><![CDATA[<p><a href="http://aws.amazon.com/elasticmapreduce/">Amazon Elastic MapReduce</a> - Is a service provided by amazon web services intended to provide facilities to build fast and easy to maintain big data calculations using MapReduce paradigm. Basically, Amazon EMR is a hosted Hadoop, at first glance. But in combination with aws API and other services, like S3, EMR becomes quite feature full solution. Hadoop requires some extra skills to deploy it locally. At least you need to be familar with JVM infrostructure. EMR allows you to abstract from some technical aspects like deploying cluster and managing nodes.</p>
+
+<p>Also, which is nice about EMR that you can write MR functions in any language, not necessary in Java.</p>
+
+<p>Before we will start to work on the topic itself, here are some requirements you need to meet to be able to use samples:</p>
+
+<ul>
+<li>  Ruby programming language - we will use 1.9.3-p392 version (on the moment of blogging that is 1.9.3-head)</li>
+<li>  Amazon Web Services account - if you don&#8217;t have one please create, subscribe for EMR (Elastic MapReduce) and S3</li>
+</ul>
+
+
+<p>The main goal is to be able to process huge amount of data (we will take log files from nginx server from one of my applications) and generate statistic.
+We will investigate amount of hits per browser families per day. I would like to note that it is just an example of how you can use amazon EMR for such kind of cases.</p>
+
+<p>About MapReduce concept you can read on different sources, starting from <a href="http://static.googleusercontent.com/external_content/untrusted_dlcp/research.google.com/uk//archive/mapreduce-osdi04.pdf">Goolge&#8217;s whitepaper</a>, <a href="http://en.wikipedia.org/wiki/MapReduce">wiki</a>, <a href="http://hadoop.apache.org/docs/r1.0.4/mapred_tutorial.html">Hadoop sources</a>.</p>
+
+<p>I will not cover the theoretical principles of MR, since they covered quite well in sources above. Besides, I think It is easier to get that on realworld example. So please, read the references, at least article in wikipedia.</p>
+
+<p>First our source file - I will use nginx access.log from demo server and the use case will be is to collect amount of hits per browser family. Basilcaly, I dont care about period, let&#8217;s say we have 1 log file per day and we will use as input file that one only.</p>
+
+<p>Every access.log line formated with &#8220;combined&#8221; format:</p>
+
+<pre><code>'$remote_addr - $remote_user [$time_local]  '
+    '"$request" $status $body_bytes_sent '
+    '"$http_referer" "$http_user_agent"';
+</code></pre>
+
+<p>And in real life looks like this:</p>
+
+<pre><code>127.0.0.1 - - [23/Apr/2013:00:10:02 +0100] "GET / HTTP/1.0" 403 168 "-" "Wget/1.12 (linux-gnu)"
+193.169.146.189 - - [22/Apr/2013:09:07:12 +0100] "GET /login HTTP/1.1" 200 1651 "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_8_3) AppleWebKit/536.28.10 (KHTML, like Gecko) Version/6.0.3 Safari/536.28.10"
+83.161.144.255 - - [22/Apr/2013:09:08:22 +0100] "GET /login HTTP/1.1" 200 1648 "-" "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.31 (KHTML, like Gecko) Chrome/26.0.1410.64 Safari/537.31"
+</code></pre>
+
+<p>Your log</p>
+]]></content>
+  </entry>
+  
+</feed>
