@@ -67,13 +67,13 @@ To get started go to aws console, your favourite region and select s3. After tha
 
 {% img /images/s3-emr.jpg [width] [height] %}
 
-Input folder should contains access.log file with data.
+Input folder should contain access.log file with data.
 
-*Note:* I prefer to create a separate user and group when do some actions in aws. That guaranties some rights and visibility isolation, especially when you have quite a lot of critical and important applications running under same account. You can easily do that with IAM(Identity and Access Management) and policies generators. I will not cover that topic here, since it's quite nice described in aws documentation.
+*Note:* I prefer to create a separate user and group when do some actions in aws. That guaranties some rights and visibility isolation, especially when you have a lot of critical and important applications running under same account. You can easily do that with IAM (Identity and Access Management) and policies generators. I will not cover that topic here, since it's nice described in aws documentation.
 
-Once we loaded input and created policies(you can skip that if you want), we can build our MR-job. 
+Once we loaded input and created policies (you can skip that if you want), we can build our MR-job. 
 
-Go to aws elastic map reduce and click "Create New Job Flow". Fill the name of the job, in my case is "Browsers Analysis", select hadoop version "Amazon Distribution", Select "Run your own application" as a job flow.
+Go to aws elastic map reduce and click "Create New Job Flow". Fill the name of the job, in my case is "Browsers Analysis", select hadoop version "Amazon Distribution", select "Run your own application" as a job flow.
 
 Result should be like that:
 
@@ -157,5 +157,7 @@ You will have results, close to aggregate reducer output. In my case it was:
          12 LongValueSum:Safari ["7"]   1
 
 Also during MR-job creation you will be able to set bucket for MR process logging and ability to access nodes to check software etc(Step Advanced Settings).
+
+A few words about [pricing](http://aws.amazon.com/elasticmapreduce/pricing/). First of all you should consider that EMR will normalize hours of usage, so if you job run for 20 minutes you will pay for a full hour per every node. So calculations are next: Total amount of nodes of type I * full hours of job running time * ( hourly rate for type I EC2 instance +  hourly rate for MR job on type I instance) . So our test example wich was running on 3 small nodes for 15 minutes in EU-West region costs = 3 * 1 * ( 0.065 + 0.015 ) + S3 costs = $0.24 + S3 costs. It is hard to calculate S3 costs for that particluar job since it was small amount of data and bandwidth was used.
 
 This was very basic overview of EMR abilities, I hope in the nearest future I will be able to present some more complex usecases and applications of that technologie.
