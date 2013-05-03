@@ -32,6 +32,7 @@ Twitter accounts to follow:
   * [@bitcoininfo](https://twitter.com/bitcoininfo)
   * [@BitcoinWatch](https://twitter.com/BitcoinWatch)
   * [@matthew_d_green](https://twitter.com/matthew_d_green)
+
 And more. But a lot of them are just doing RT for news. 
 
 Just links:
