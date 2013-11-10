@@ -50,7 +50,22 @@ So, basically my Vagrantfile will be next for this small assignment:
 
 Shell script for provisioning nodes:
 
-{% gist 6983893 %}
+{% gist 7040042 %}
 
 Conclusions
 -----------
+
+When I checked the glusterfs resources first time, I was very enthousiastic about it. But more I googled, more I got bad expiarences links. Personally I think it is important to understand that its really depends on user case. And you should not apply some one's faults to your setup.
+
+More readings & links
+---------------------
+
+Bad experience:
+  
+* http://www.devco.net/archives/2010/09/22/experience_with_glusterfs.php
+* http://www.mail-archive.com/gluster-users@gluster.org/msg08351.html
+* http://www.softwareprojects.com/resources/programming/t-6-months-with-glusterfs-a-distributed-file-system-2057.html
+
+Highscalability review:
+
+* http://highscalability.com/product-glusterfs
