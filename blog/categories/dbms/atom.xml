@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: DBMS | IO0001]]></title>
+  <link href="http://cthulhu.github.com/cthulhu/blog/categories/dbms/atom.xml" rel="self"/>
+  <link href="http://cthulhu.github.com/cthulhu/"/>
+  <updated>2013-11-11T00:48:15+01:00</updated>
+  <id>http://cthulhu.github.com/cthulhu/</id>
+  <author>
+    <name><![CDATA[Stanislav O. Pogrebnyak]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[C* On Ubuntu Single-Node Cluster]]></title>
+    <link href="http://cthulhu.github.com/cthulhu/blog/2013/11/10/c-star-on-ubuntu-single-node-cluster/"/>
+    <updated>2013-11-10T23:07:00+01:00</updated>
+    <id>http://cthulhu.github.com/cthulhu/blog/2013/11/10/c-star-on-ubuntu-single-node-cluster</id>
+    <content type="html"><![CDATA[<p>Due to <a href="http://cassandra.apache.org/download/">http://cassandra.apache.org/download/</a> &ndash; The latest stable release of Apache Cassandra is 2.0.2 (released on 2013-10-28).</p>
+
+<p>I'v googled quite a while to get the most true way of C* installation under the Ubuntu. No luck actually, for a some reason C* doesn&rsquo;t have any well supported PPA or so. And looks like the only way to get it is to download from site and go for a manual.</p>
+
+<p>Update: DataStax hosts some Debian packages for C*, but 1 &ndash; they are looks old, 2 &ndash; they are for Debian not for Ubuntu. So lets go for a manual.</p>
+
+<h1>Installation on Ubuntu 12.04:</h1>
+
+<p>Lets make our host up to date:</p>
+
+<pre><code>sudo apt-get update &amp;&amp; sudo apt-get upgrade -y
+</code></pre>
+
+<p>Before we will get Cassandra we need to install Java. I will go fo open-jdk:</p>
+
+<pre><code>sudo apt-get install openjdk-7-jdk openjdk-7-jre -y
+</code></pre>
+
+<p>Lets check our java:</p>
+
+<pre><code>java -version
+</code></pre>
+
+<p>You should get some thing like:</p>
+
+<pre><code>java version "1.7.0_40"
+Java(TM) SE Runtime Environment (build 1.7.0_40-b43)
+Java HotSpot(TM) 64-Bit Server VM (build 24.0-b56, mixed mode)
+</code></pre>
+
+<p>Now we can get Cassandra:</p>
+
+<pre><code>cd ~ &amp;&amp; wget http://apache.mirror1.spango.com/cassandra/2.0.2/apache-cassandra-2.0.2-bin.tar.gz
+tar xvf apache-cassandra-2.0.2-bin.tar.gz
+mv apache-cassandra-2.0.2 /opt
+</code></pre>
+
+<p>Now C* looks like &ldquo;Installed&rdquo;, we still need to create startup script and configure some directories with correct permissions.</p>
+
+<p>Since my interest is purely academic &ndash; I&rsquo;m not going to build HA solutions so far, but just want to play with C* a bit I will handle start/stop manually.</p>
+
+<p>So, start daemon with:</p>
+
+<pre><code>sudo /opt/apache-cassandra-2.0.2/bin/cassandra -f
+</code></pre>
+
+<p>After first run Cassandra will be happy to tell you that it created some dirs and files there and here. And it will start to listen some port, I belive that&rsquo;s 9160. Also -f option says foreground to daemon so it will attach to your screen and you probably need to open new one. BTW this one can be stopped with CTRL+C. Lets connect and check if everything works:</p>
+
+<pre><code>/opt/apache-cassandra-2.0.2/bin/cqlsh
+</code></pre>
+
+<p>Should promt you next:</p>
+
+<pre><code>Connected to Test Cluster at localhost:9160.
+[cqlsh 4.1.0 | Cassandra 2.0.2 | CQL spec 3.1.1 | Thrift protocol 19.38.0]
+Use HELP for help.
+cqlsh&gt;
+</code></pre>
+
+<h1>Basics</h1>
+
+<p>Cassandra operates with keyspaces &ndash; namespaces for tables. Which I think are databases in other DBMSes. Hehe, Cassandra is KSMS &ndash; keyspace management system.</p>
+
+<p>Lets create one keyspace:</p>
+
+<pre><code>CREATE KEYSPACE mykeyspace WITH REPLICATION = { 'class' : 'SimpleStrategy', 'replication_factor' : 1 };  
+</code></pre>
+
+<p>So far that&rsquo;s black magick and we don&rsquo;t know anything about meaning of the words in command above.</p>
+
+<p>To switch to newerly created keyspace do:</p>
+
+<pre><code>USE mykeyspace;
+</code></pre>
+
+<p>Now we can create our first table. Example says it should be users. We don&rsquo;t have any problems with that, so:</p>
+
+<pre><code>CREATE TABLE users (
+  user_id int PRIMARY KEY,
+  fname text,
+  lname text
+);
+</code></pre>
+
+<p>Unlike mongodb you have to explicitly specify the schema. As well as you have to create tables.</p>
+
+<p>Lets insert some users. Again from examples:</p>
+
+<pre><code>INSERT INTO users (user_id,  fname, lname)
+  VALUES (1745, 'john', 'smith');
+INSERT INTO users (user_id,  fname, lname)
+  VALUES (1744, 'john', 'doe');
+INSERT INTO users (user_id,  fname, lname)
+  VALUES (1746, 'john', 'smith');
+</code></pre>
+
+<p>And get all the users:</p>
+
+<pre><code>SELECT * FROM users;
+</code></pre>
+
+<p>If we want to search by particular field not primary key we need to specify an index on that field. Basically, If we want to query we need to have covered indexes, as far as I understand.</p>
+
+<p>so without extra indexes:</p>
+
+<pre><code>SELECT * FROM users WHERE lname = 'smith';
+</code></pre>
+
+<p>Will produce an error: Bad Request: No indexed columns present in by-columns clause with Equal operator.</p>
+
+<p>Probably thats good, since from 1st query we can see already if we need indexes or not.</p>
+
+<p>Adding indexes is very simple, just:</p>
+
+<pre><code>CREATE INDEX ON users (lname);
+</code></pre>
+
+<p>After that it works like it should.</p>
+
+<h2>Conclusions</h2>
+
+<p>It was very fast and brief of how you can start with Cassandra on Ubuntu. I really hope that I will have more time to dig deeper and get actually what is so big deal about C*.</p>
+]]></content>
+  </entry>
+  
+</feed>

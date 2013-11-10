@@ -4,7 +4,7 @@
   <title><![CDATA[Category: MySQL | IO0001]]></title>
   <link href="http://cthulhu.github.com/cthulhu/blog/categories/mysql/atom.xml" rel="self"/>
   <link href="http://cthulhu.github.com/cthulhu/"/>
-  <updated>2013-05-04T00:40:23+03:00</updated>
+  <updated>2013-11-11T00:48:15+01:00</updated>
   <id>http://cthulhu.github.com/cthulhu/</id>
   <author>
     <name><![CDATA[Stanislav O. Pogrebnyak]]></name>
@@ -16,19 +16,19 @@
   <entry>
     <title type="html"><![CDATA[Deployment of Ruby On Rails]]></title>
     <link href="http://cthulhu.github.com/cthulhu/blog/2013/04/19/deployment-of-ruby-on-rails/"/>
-    <updated>2013-04-19T01:17:00+03:00</updated>
+    <updated>2013-04-19T01:17:00+02:00</updated>
     <id>http://cthulhu.github.com/cthulhu/blog/2013/04/19/deployment-of-ruby-on-rails</id>
     <content type="html"><![CDATA[<p>From time to time I need to refresh a guide of Rails application production environment deployment.</p>
 
-<p>My favourite OS is Linux Ubuntu. I prefer to use LTS versions, and today's LTS is 12.04 Precise Pangolin. You can download server distribution from <a href="http://ubuntu.com">Ubuntu official site</a>.</p>
+<p>My favourite OS is Linux Ubuntu. I prefer to use LTS versions, and today&rsquo;s LTS is 12.04 Precise Pangolin. You can download server distribution from <a href="http://ubuntu.com">Ubuntu official site</a>.</p>
 
-<p>I will not cover OS installation process, since that's quite trivial and there are a lot of tutorials in the Internet about that. Besides, I can imagine that OS already installed on your VPS/PS/ whatever you have.</p>
+<p>I will not cover OS installation process, since that&rsquo;s quite trivial and there are a lot of tutorials in the Internet about that. Besides, I can imagine that OS already installed on your VPS/PS/ whatever you have.</p>
 
-<p><em>Note:</em> You might want to use chef or puppets for deployment automatization. And you are absolutelly right - recipes are the best way to DRY that as well. I will definitely go for it at some point.</p>
+<p><em>Note:</em> You might want to use chef or puppets for deployment automatization. And you are absolutelly right &ndash; recipes are the best way to DRY that as well. I will definitely go for it at some point.</p>
 
 <p>So you have installed OS and logged in to the server via ssh.</p>
 
-<p><em>Note:</em> Don't forget to disable passworded authorization and root login for your ssh server. Also it's nice to change ssh port from default one to something else, so the hackers will not be able to use simples atacks.</p>
+<p><em>Note:</em> Don&rsquo;t forget to disable passworded authorization and root login for your ssh server. Also it&rsquo;s nice to change ssh port from default one to something else, so the hackers will not be able to use simples atacks.</p>
 
 <pre><code>sudo sed -i "/^Port / c Port 22222" /etc/ssh/sshd_config
 sudo sed -i "/^PermitRootLogin / c PermitRootLogin no" /etc/ssh/sshd_config
@@ -36,19 +36,19 @@ sudo sed -i "/^PermitRootLogin / c PermitRootLogin no" /etc/ssh/sshd_config
 
 <p>Here is a set of commands you need to execute to install/configure needed software.</p>
 
-<p>Let's make our system up to date:</p>
+<p>Let&rsquo;s make our system up to date:</p>
 
 <pre><code>sudo apt-get update &amp;&amp; sudo apt-get upgrade
 </code></pre>
 
-<p>Now let's install software we will use (Git, compilers, archivers etc):</p>
+<p>Now let&rsquo;s install software we will use (Git, compilers, archivers etc):</p>
 
 <pre><code>sudo apt-get install git-core build-essential zlib1g-dev libssl-dev vim mc htop libmysqlclient-dev curl git-core ruby libpcre3-dev libxml2-dev libxml2 libxslt1-dev imagemagick libmagickcore-dev libmagickwand-dev autoconf byacc mysql-client libmysql-ruby libmysqlclient15-dev libmysqlclient-dev libmagickwand-dev imagemagick libmagickcore-dev zip screen curl nodejs install -y ghostscript imagemagick ffmpeg -y 
 </code></pre>
 
 <p>Now we need a web server. Personally I perfer nginx. It is fast, easy to use and configure. Someone prefers to installing from packages but I always do that from sources, since I can get the latest one and also I can configure modules I need.</p>
 
-<p>So let's get it (at the moment of that blog the latest stable release is 1.2.8):</p>
+<p>So let&rsquo;s get it (at the moment of that blog the latest stable release is 1.2.8):</p>
 
 <pre><code>sudo useradd -s /usr/sbin/nologin nginx
 cd ~
@@ -85,12 +85,12 @@ sudo chmod 0755 /etc/init.d/nginx
 rm 5420306 -rf
 </code></pre>
 
-<p>Now let's get ruby. I would recomend to use rvm even in production environment, since it will bring some flexibility to your setup. Also I recomend to use per user rvm installation rather than system wide.</p>
+<p>Now let&rsquo;s get ruby. I would recomend to use rvm even in production environment, since it will bring some flexibility to your setup. Also I recomend to use per user rvm installation rather than system wide.</p>
 
 <pre><code> \curl -#L https://get.rvm.io | bash -s stable
 </code></pre>
 
-<p>Let's apply changes:</p>
+<p>Let&rsquo;s apply changes:</p>
 
 <pre><code>source ~/.bashrc
 </code></pre>
@@ -100,14 +100,14 @@ rm 5420306 -rf
 <pre><code>rvm install 1.9.3-p392
 </code></pre>
 
-<p>I prefer to install release number rather than head. Since it's quite clear how to upgrade in case of new versions.</p>
+<p>I prefer to install release number rather than head. Since it&rsquo;s quite clear how to upgrade in case of new versions.</p>
 
 <p>Now gemset (I prefer to use before setup hook for capistrano) but this also will work:</p>
 
 <pre><code>rvm use 1.9.3@appname --create
 </code></pre>
 
-<p>Now let's connect nginx to our rails application. We can do that using several approaches (web servers). By popularity ATM:</p>
+<p>Now let&rsquo;s connect nginx to our rails application. We can do that using several approaches (web servers). By popularity ATM:</p>
 
 <ul>
 <li><a href="http://code.macournoyer.com/thin/">Thin</a></li>
@@ -115,18 +115,18 @@ rm 5420306 -rf
 <li><a href="http://unicorn.bogomips.org/">Unicorn</a></li>
 <li><a href="http://pow.cx/">Pow</a></li>
 <li><a href="http://puma.io/">Puma</a></li>
-<li><a href="http://rainbows.rubyforge.org/">Rainbows</a> - Unicorn fork</li>
+<li><a href="http://rainbows.rubyforge.org/">Rainbows</a> &ndash; Unicorn fork</li>
 <li>Other options</li>
 </ul>
 
 
-<p>I perfer unicorn, but you might want to consider another option. Actualy I'm quite happy to have so much choices. Not every platform have such a wide range of different solutions.</p>
+<p>I perfer unicorn, but you might want to consider another option. Actualy I&rsquo;m quite happy to have so much choices. Not every platform have such a wide range of different solutions.</p>
 
-<p>Unicorn is able to listen UNIX sockets, that's very handy and we can start multiple workers for our application and connect to nginx's upstream.</p>
+<p>Unicorn is able to listen UNIX sockets, that&rsquo;s very handy and we can start multiple workers for our application and connect to nginx&rsquo;s upstream.</p>
 
 <p>Our application will be located at /home/#{username}/application/#{application_name}, so socket location will be /home/#{username}/application/#{application_name}/shared/sockets/uncorn.sock.</p>
 
-<p>Don't forget to add nginx user to your #{username} group. For example, for user 'deployer' it will be:</p>
+<p>Don&rsquo;t forget to add nginx user to your #{username} group. For example, for user &lsquo;deployer&rsquo; it will be:</p>
 
 <pre><code>sudo usermod -a -G deployer nginx
 </code></pre>
@@ -137,14 +137,14 @@ rm 5420306 -rf
 </code></pre>
 
 <p>I will not cover mysql configuration here, since It is really depends on your cases.
-Let's created database and user:</p>
+Let&rsquo;s created database and user:</p>
 
 <pre><code>mysql -u root -p -e "CREATE DATABASE \`application_production\` CHARACTER SET utf8 COLLATE utf8_general_ci;"
 mysql -u root -p -e "CREATE USER 'application'@'localhost' IDENTIFIED BY 'some_pass';"
 mysql -u root -p -e "GRANT ALL PRIVILEGES ON application_production.* TO 'application'@'localhost' WITH GRANT OPTION;""
 </code></pre>
 
-<p>That's it. Since now I have step by step tutorial, I will try to compose a chef recipes for that.</p>
+<p>That&rsquo;s it. Since now I have step by step tutorial, I will try to compose a chef recipes for that.</p>
 ]]></content>
   </entry>
   
