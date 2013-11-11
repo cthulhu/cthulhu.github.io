@@ -4,7 +4,7 @@
   <title><![CDATA[Category: EMR | IO0001]]></title>
   <link href="http://cthulhu.github.com/cthulhu/blog/categories/emr/atom.xml" rel="self"/>
   <link href="http://cthulhu.github.com/cthulhu/"/>
-  <updated>2013-05-04T00:40:23+03:00</updated>
+  <updated>2013-11-11T00:48:15+01:00</updated>
   <id>http://cthulhu.github.com/cthulhu/</id>
   <author>
     <name><![CDATA[Stanislav O. Pogrebnyak]]></name>
@@ -16,30 +16,30 @@
   <entry>
     <title type="html"><![CDATA[Elastic MapReduce using streaming and ruby]]></title>
     <link href="http://cthulhu.github.com/cthulhu/blog/2013/03/04/elastic-mapreduce-using-streaming-and-ruby/"/>
-    <updated>2013-03-04T01:57:00+02:00</updated>
+    <updated>2013-03-04T01:57:00+01:00</updated>
     <id>http://cthulhu.github.com/cthulhu/blog/2013/03/04/elastic-mapreduce-using-streaming-and-ruby</id>
-    <content type="html"><![CDATA[<p><a href="http://aws.amazon.com/elasticmapreduce/">Amazon Elastic MapReduce</a> - Is a service provided by amazon web services intended to provide facilities to build fast and easy to maintain big data calculations using MapReduce paradigm. Basically, Amazon EMR is a hosted Hadoop, at first glance. But in combination with aws API and other services, like S3, EMR becomes quite feature full solution. Hadoop requires some extra skills to deploy it locally. At least you need to be familar with JVM infrostructure. EMR allows you to abstract from some technical aspects like deploying cluster and managing nodes.</p>
+    <content type="html"><![CDATA[<p><a href="http://aws.amazon.com/elasticmapreduce/">Amazon Elastic MapReduce</a> &ndash; Is a service provided by amazon web services intended to provide facilities to build fast and easy to maintain big data calculations using MapReduce paradigm. Basically, Amazon EMR is a hosted Hadoop, at first glance. But in combination with aws API and other services, like S3, EMR becomes quite feature full solution. Hadoop requires some extra skills to deploy it locally. At least you need to be familar with JVM infrostructure. EMR allows you to abstract from some technical aspects like deploying cluster and managing nodes.</p>
 
 <p>Also, which is nice about EMR that you can write MR functions in any language, not necessary in Java.</p>
 
 <p>Before we will start to work on the topic itself, here are some requirements you need to meet to be able to use samples:</p>
 
 <ul>
-<li>  Ruby programming language skills - not much, since ruby is quite expressive language</li>
-<li>  Amazon Web Services account - if you don't have one please create, subscribe for EMR (Elastic MapReduce) and S3</li>
+<li>  Ruby programming language skills &ndash; not much, since ruby is quite expressive language</li>
+<li>  Amazon Web Services account &ndash; if you don&rsquo;t have one please create, subscribe for EMR (Elastic MapReduce) and S3</li>
 </ul>
 
 
 <p>The main goal is to be able to process huge amount of data (we will take log files from nginx server from one of my applications) and generate statistic.
 We will investigate amount of hits per browser families per day. I would like to note that it is just an example of how you can use amazon EMR for such kind of cases.</p>
 
-<p>About MapReduce concept you can read on different sources, starting from <a href="http://static.googleusercontent.com/external_content/untrusted_dlcp/research.google.com/uk//archive/mapreduce-osdi04.pdf">Goolge's whitepaper</a>, <a href="http://en.wikipedia.org/wiki/MapReduce">wiki</a>, <a href="http://hadoop.apache.org/docs/r1.0.4/mapred_tutorial.html">Hadoop sources</a>.</p>
+<p>About MapReduce concept you can read on different sources, starting from <a href="http://static.googleusercontent.com/external_content/untrusted_dlcp/research.google.com/uk//archive/mapreduce-osdi04.pdf">Goolge&rsquo;s whitepaper</a>, <a href="http://en.wikipedia.org/wiki/MapReduce">wiki</a>, <a href="http://hadoop.apache.org/docs/r1.0.4/mapred_tutorial.html">Hadoop sources</a>.</p>
 
 <p>I will not cover the theoretical principles of MR, since they covered quite well in sources above. Besides, I think It is easier to get that on realworld example. So please, read the references, at least article in wikipedia.</p>
 
-<p>First our source file - I will use nginx access.log from demo server and the use case will be is to collect amount of hits per browser family. Basilcaly, I dont care about period, let's say we have 1 log file per day and we will use as input file that one only.</p>
+<p>First our source file &ndash; I will use nginx access.log from demo server and the use case will be is to collect amount of hits per browser family. Basilcaly, I dont care about period, let&rsquo;s say we have 1 log file per day and we will use as input file that one only.</p>
 
-<p>Every access.log line formated with "combined" format:</p>
+<p>Every access.log line formated with &ldquo;combined&rdquo; format:</p>
 
 <pre><code>'$remote_addr - $remote_user [$time_local]  '
     '"$request" $status $body_bytes_sent '
@@ -63,7 +63,7 @@ input
 output
 </code></pre>
 
-<p>bootstrap.sh - bash file for software installation on every EMR node. Basically, you can setup gems and libs, compile needed externall resources etc with it.</p>
+<p>bootstrap.sh &ndash; bash file for software installation on every EMR node. Basically, you can setup gems and libs, compile needed externall resources etc with it.</p>
 
 <p>My file is very simple:</p>
 
@@ -74,7 +74,7 @@ sudo apt-get -y install rubygems
 
 <p>Since rubygems depends on ruby, we will get it installed as well. I can imagine that in reallife cases bootstrap scripts will be much more complex.</p>
 
-<p>browsers.rb - that is basically our map function. In my example it looks like:</p>
+<p>browsers.rb &ndash; that is basically our map function. In my example it looks like:</p>
 
 <p><div><script src='https://gist.github.com/5446482.js'></script>
 <noscript><pre><code></code></pre></noscript></div>
@@ -90,11 +90,11 @@ sudo apt-get -y install rubygems
 
 <p>Input folder should contain access.log file with data.</p>
 
-<p><em>Note:</em> I prefer to create a separate user and group when do some actions in aws. That guaranties some rights and visibility isolation, especially when you have a lot of critical and important applications running under same account. You can easily do that with IAM (Identity and Access Management) and policies generators. I will not cover that topic here, since it's nice described in aws documentation.</p>
+<p><em>Note:</em> I prefer to create a separate user and group when do some actions in aws. That guaranties some rights and visibility isolation, especially when you have a lot of critical and important applications running under same account. You can easily do that with IAM (Identity and Access Management) and policies generators. I will not cover that topic here, since it&rsquo;s nice described in aws documentation.</p>
 
 <p>Once we loaded input and created policies (you can skip that if you want), we can build our MR-job.</p>
 
-<p>Go to aws elastic map reduce and click "Create New Job Flow". Fill the name of the job, in my case is "Browsers Analysis", select hadoop version "Amazon Distribution", select "Run your own application" as a job flow.</p>
+<p>Go to aws elastic map reduce and click &ldquo;Create New Job Flow&rdquo;. Fill the name of the job, in my case is &ldquo;Browsers Analysis&rdquo;, select hadoop version &ldquo;Amazon Distribution&rdquo;, select &ldquo;Run your own application&rdquo; as a job flow.</p>
 
 <p>Result should be like that:</p>
 
@@ -116,13 +116,13 @@ sudo apt-get -y install rubygems
 
 <p>On Advanced options step you need to configure additional options for the job. I would say use defaults and press continue, since in test example all those settings do not matter much.</p>
 
-<p>On next step you will have to configure bootstrap options for your nodes. All our nodes will be bootstrapped same using our script loaded to s3 bucket above. So Select "Configure your Bootstrap Actions", Action type: "Custom Action", Name: Node bootstrap. Amazon S3 Location: s3://emr-workshop2013/bootstrap.sh.</p>
+<p>On next step you will have to configure bootstrap options for your nodes. All our nodes will be bootstrapped same using our script loaded to s3 bucket above. So Select &ldquo;Configure your Bootstrap Actions&rdquo;, Action type: &ldquo;Custom Action&rdquo;, Name: Node bootstrap. Amazon S3 Location: s3://emr-workshop2013/bootstrap.sh.</p>
 
 <p><img src="/images/create-job-step5.jpg" title="[width] [height]" ></p>
 
-<p>On last step of the wisard you will be able to review job's settings.</p>
+<p>On last step of the wisard you will be able to review job&rsquo;s settings.</p>
 
-<p>After you will press "Create Job Flow" Amazon will start instances and the computation will start. It will take few minutes to bootstrap the nodes, and ofcourse some time to process the data from input log file. As a result in output folder you will have a bunch of text files with aggregated counts per browser family.</p>
+<p>After you will press &ldquo;Create Job Flow&rdquo; Amazon will start instances and the computation will start. It will take few minutes to bootstrap the nodes, and ofcourse some time to process the data from input log file. As a result in output folder you will have a bunch of text files with aggregated counts per browser family.</p>
 
 <p>How to debug MR-job?</p>
 

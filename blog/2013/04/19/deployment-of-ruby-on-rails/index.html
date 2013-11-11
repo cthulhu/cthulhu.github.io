@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
 <!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
@@ -9,7 +8,6 @@
   <meta name="author" content="Stanislav O. Pogrebnyak">
 
   
-  <meta name="description" content="From time to time I need to refresh a guide of Rails application production environment deployment. My favourite OS is Linux Ubuntu. I prefer to use &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -18,59 +16,75 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://cthulhu.github.com/cthulhu/blog/2013/04/19/deployment-of-ruby-on-rails/">
-  <link href="/favicon.png" rel="icon">
-  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
-  <script src="/javascripts/modernizr-2.0.js"></script>
-  <script src="/javascripts/ender.js"></script>
-  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link rel="canonical" href="http://cthulhu.github.com/cthulhu/blog/2013/04/19/deployment-of-ruby-on-rails">
+  <link href="/favicon.png" type="image/png" rel="icon">
   <link href="/atom.xml" rel="alternate" title="IO0001" type="application/atom+xml">
-  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
-<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
-<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 
+  <link href="/javascripts/libs/bootstrap-3.0.0/dist/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+<link href="/javascripts/libs/bootstrap-3.0.0/dist/css/bootstrap-theme.min.css" rel="stylesheet" type="text/css">
+<link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+
+
+  <script src="/javascripts/libs/jquery/jquery-2.0.3.min.js"></script>
   
 
 </head>
 
-<body   >
-  <header role="banner"><hgroup>
-  <h1><a href="/">IO0001</a></h1>
-  
-    <h2>Programming languages, web development, "hight loads", "big data" and more</h2>
-  
-</hgroup>
+  <body   >
+    <div id="wrap">
+      <header role="banner">
+        <nav class="navbar navbar-default" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">IO0001</a>
+        </div>
 
-</header>
-  <nav role="navigation"><ul class="subscription" data-subscription="rss">
-  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
-  
-</ul>
-  
-<form action="http://google.com/search" method="get">
-  <fieldset role="search">
-    <input type="hidden" name="q" value="site:cthulhu.github.com/cthulhu" />
-    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
-  </fieldset>
-</form>
-  
-<ul class="main-navigation">
-  <li><a href="/">Blog</a></li>
-  <li><a href="/blog/archives">Archives</a></li>
-</ul>
-
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li class="active">
+                    <a href="/">Blog</a>
+                </li>
+                <li >
+                    <a href="/blog/archives">Archives</a>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a class="subscribe-rss" href="/atom.xml" title="subscribe via RSS">
+                        <span class="visible-xs">RSS</span>
+                        <img class="hidden-xs" src="/images/rss.png" alt="RSS">
+                    </a>
+                </li>
+                
+            </ul>
+            
+                <form class="search navbar-form navbar-right" action="http://google.com/search" method="GET">
+                    <input type="hidden" name="q" value="site:cthulhu.github.com/cthulhu">
+                    <div class="form-group">
+                        <input class="form-control" type="text" name="q" placeholder="Search">
+                    </div>
+                </form>
+            
+        </div>
+    </div>
 </nav>
-  <div id="main">
-    <div id="content">
-      <div>
-<article class="hentry" role="article">
-  
-  <header>
+
+
+      </header>
+      <div id="main" class="container">
+        <div id="content">
+          <div class="row">
+  <div class="page-content col-md-9">
+    <article class="hentry" role="article">
+      
+  <header class="page-header">
     
-      <h1 class="entry-title">Deployment of Ruby on Rails</h1>
-    
-    
-      <p class="meta">
+      <p class="meta text-muted text-uppercase">
         
 
 
@@ -80,29 +94,37 @@
 
 
 
-  
 
 
-<time datetime="2013-04-19T01:17:00+03:00" pubdate data-updated="true">Apr 19<span>th</span>, 2013</time>
+
+
+<span class="glyphicon glyphicon-calendar"></span> <time datetime="2013-04-19T01:17:00+02:00" pubdate data-updated="true">Apr 19<span>th</span>, 2013</time>
         
-         | <a href="#disqus_thread">Comments</a>
+           | <a href="#disqus_thread"
+             data-disqus-identifier="http://cthulhu.github.com/cthulhu">Comments</a>
         
       </p>
+    
+    
+    <h1 class="entry-title">
+        Deployment of Ruby on Rails
+        
+    </h1>
     
   </header>
 
 
-<div class="entry-content"><p>From time to time I need to refresh a guide of Rails application production environment deployment.</p>
+<div class="entry-content clearfix"><p>From time to time I need to refresh a guide of Rails application production environment deployment.</p>
 
-<p>My favourite OS is Linux Ubuntu. I prefer to use LTS versions, and today&#8217;s LTS is 12.04 Precise Pangolin. You can download server distribution from <a href="http://ubuntu.com">Ubuntu official site</a>.</p>
+<p>My favourite OS is Linux Ubuntu. I prefer to use LTS versions, and today&rsquo;s LTS is 12.04 Precise Pangolin. You can download server distribution from <a href="http://ubuntu.com">Ubuntu official site</a>.</p>
 
-<p>I will not cover OS installation process, since that&#8217;s quite trivial and there are a lot of tutorials in the Internet about that. Besides, I can imagine that OS already installed on your VPS/PS/ whatever you have.</p>
+<p>I will not cover OS installation process, since that&rsquo;s quite trivial and there are a lot of tutorials in the Internet about that. Besides, I can imagine that OS already installed on your VPS/PS/ whatever you have.</p>
 
-<p><em>Note:</em> You might want to use chef or puppets for deployment automatization. And you are absolutelly right - recipes are the best way to DRY that as well. I will definitely go for it at some point.</p>
+<p><em>Note:</em> You might want to use chef or puppets for deployment automatization. And you are absolutelly right &ndash; recipes are the best way to DRY that as well. I will definitely go for it at some point.</p>
 
 <p>So you have installed OS and logged in to the server via ssh.</p>
 
-<p><em>Note:</em> Don&#8217;t forget to disable passworded authorization and root login for your ssh server. Also it&#8217;s nice to change ssh port from default one to something else, so the hackers will not be able to use simples atacks.</p>
+<p><em>Note:</em> Don&rsquo;t forget to disable passworded authorization and root login for your ssh server. Also it&rsquo;s nice to change ssh port from default one to something else, so the hackers will not be able to use simples atacks.</p>
 
 <pre><code>sudo sed -i "/^Port / c Port 22222" /etc/ssh/sshd_config
 sudo sed -i "/^PermitRootLogin / c PermitRootLogin no" /etc/ssh/sshd_config
@@ -110,19 +132,19 @@ sudo sed -i "/^PermitRootLogin / c PermitRootLogin no" /etc/ssh/sshd_config
 
 <p>Here is a set of commands you need to execute to install/configure needed software.</p>
 
-<p>Let&#8217;s make our system up to date:</p>
+<p>Let&rsquo;s make our system up to date:</p>
 
 <pre><code>sudo apt-get update &amp;&amp; sudo apt-get upgrade
 </code></pre>
 
-<p>Now let&#8217;s install software we will use (Git, compilers, archivers etc):</p>
+<p>Now let&rsquo;s install software we will use (Git, compilers, archivers etc):</p>
 
 <pre><code>sudo apt-get install git-core build-essential zlib1g-dev libssl-dev vim mc htop libmysqlclient-dev curl git-core ruby libpcre3-dev libxml2-dev libxml2 libxslt1-dev imagemagick libmagickcore-dev libmagickwand-dev autoconf byacc mysql-client libmysql-ruby libmysqlclient15-dev libmysqlclient-dev libmagickwand-dev imagemagick libmagickcore-dev zip screen curl nodejs install -y ghostscript imagemagick ffmpeg -y 
 </code></pre>
 
 <p>Now we need a web server. Personally I perfer nginx. It is fast, easy to use and configure. Someone prefers to installing from packages but I always do that from sources, since I can get the latest one and also I can configure modules I need.</p>
 
-<p>So let&#8217;s get it (at the moment of that blog the latest stable release is 1.2.8):</p>
+<p>So let&rsquo;s get it (at the moment of that blog the latest stable release is 1.2.8):</p>
 
 <pre><code>sudo useradd -s /usr/sbin/nologin nginx
 cd ~
@@ -159,12 +181,12 @@ sudo chmod 0755 /etc/init.d/nginx
 rm 5420306 -rf
 </code></pre>
 
-<p>Now let&#8217;s get ruby. I would recomend to use rvm even in production environment, since it will bring some flexibility to your setup. Also I recomend to use per user rvm installation rather than system wide.</p>
+<p>Now let&rsquo;s get ruby. I would recomend to use rvm even in production environment, since it will bring some flexibility to your setup. Also I recomend to use per user rvm installation rather than system wide.</p>
 
 <pre><code> \curl -#L https://get.rvm.io | bash -s stable
 </code></pre>
 
-<p>Let&#8217;s apply changes:</p>
+<p>Let&rsquo;s apply changes:</p>
 
 <pre><code>source ~/.bashrc
 </code></pre>
@@ -174,14 +196,14 @@ rm 5420306 -rf
 <pre><code>rvm install 1.9.3-p392
 </code></pre>
 
-<p>I prefer to install release number rather than head. Since it&#8217;s quite clear how to upgrade in case of new versions.</p>
+<p>I prefer to install release number rather than head. Since it&rsquo;s quite clear how to upgrade in case of new versions.</p>
 
 <p>Now gemset (I prefer to use before setup hook for capistrano) but this also will work:</p>
 
 <pre><code>rvm use 1.9.3@appname --create
 </code></pre>
 
-<p>Now let&#8217;s connect nginx to our rails application. We can do that using several approaches (web servers). By popularity ATM:</p>
+<p>Now let&rsquo;s connect nginx to our rails application. We can do that using several approaches (web servers). By popularity ATM:</p>
 
 <ul>
 <li><a href="http://code.macournoyer.com/thin/">Thin</a></li>
@@ -189,18 +211,18 @@ rm 5420306 -rf
 <li><a href="http://unicorn.bogomips.org/">Unicorn</a></li>
 <li><a href="http://pow.cx/">Pow</a></li>
 <li><a href="http://puma.io/">Puma</a></li>
-<li><a href="http://rainbows.rubyforge.org/">Rainbows</a> - Unicorn fork</li>
+<li><a href="http://rainbows.rubyforge.org/">Rainbows</a> &ndash; Unicorn fork</li>
 <li>Other options</li>
 </ul>
 
 
-<p>I perfer unicorn, but you might want to consider another option. Actualy I&#8217;m quite happy to have so much choices. Not every platform have such a wide range of different solutions.</p>
+<p>I perfer unicorn, but you might want to consider another option. Actualy I&rsquo;m quite happy to have so much choices. Not every platform have such a wide range of different solutions.</p>
 
-<p>Unicorn is able to listen UNIX sockets, that&#8217;s very handy and we can start multiple workers for our application and connect to nginx&#8217;s upstream.</p>
+<p>Unicorn is able to listen UNIX sockets, that&rsquo;s very handy and we can start multiple workers for our application and connect to nginx&rsquo;s upstream.</p>
 
 <p>Our application will be located at /home/#{username}/application/#{application_name}, so socket location will be /home/#{username}/application/#{application_name}/shared/sockets/uncorn.sock.</p>
 
-<p>Don&#8217;t forget to add nginx user to your #{username} group. For example, for user &#8216;deployer&#8217; it will be:</p>
+<p>Don&rsquo;t forget to add nginx user to your #{username} group. For example, for user &lsquo;deployer&rsquo; it will be:</p>
 
 <pre><code>sudo usermod -a -G deployer nginx
 </code></pre>
@@ -211,51 +233,53 @@ rm 5420306 -rf
 </code></pre>
 
 <p>I will not cover mysql configuration here, since It is really depends on your cases.
-Let&#8217;s created database and user:</p>
+Let&rsquo;s created database and user:</p>
 
 <pre><code>mysql -u root -p -e "CREATE DATABASE \`application_production\` CHARACTER SET utf8 COLLATE utf8_general_ci;"
 mysql -u root -p -e "CREATE USER 'application'@'localhost' IDENTIFIED BY 'some_pass';"
 mysql -u root -p -e "GRANT ALL PRIVILEGES ON application_production.* TO 'application'@'localhost' WITH GRANT OPTION;""
 </code></pre>
 
-<p>That&#8217;s it. Since now I have step by step tutorial, I will try to compose a chef recipes for that.</p>
+<p>That&rsquo;s it. Since now I have step by step tutorial, I will try to compose a chef recipes for that.</p>
 </div>
 
 
-  <footer>
-    <p class="meta">
-      
+      <footer>
+        <p class="meta text-muted">
+          
   
 
-<span class="byline author vcard">Posted by <span class="fn">Stanislav O. Pogrebnyak</span></span>
+<span class="glyphicon glyphicon-user"></span> <span class="byline author vcard">Posted by <span class="fn">Stanislav O. Pogrebnyak</span></span>
 
-      
-
-
+          
 
 
 
 
 
 
-  
 
 
-<time datetime="2013-04-19T01:17:00+03:00" pubdate data-updated="true">Apr 19<span>th</span>, 2013</time>
-      
 
+
+
+
+<span class="glyphicon glyphicon-calendar"></span> <time datetime="2013-04-19T01:17:00+02:00" pubdate data-updated="true">Apr 19<span>th</span>, 2013</time>
+          
+
+<span class="glyphicon glyphicon-tags"></span>&nbsp;
 <span class="categories">
   
-    <a class='category' href='/blog/categories/mysql/'>MySQL</a>, <a class='category' href='/blog/categories/nginx/'>Nginx</a>, <a class='category' href='/blog/categories/ruby/'>Ruby</a>, <a class='category' href='/blog/categories/rubyonrails/'>RubyOnRails</a>, <a class='category' href='/blog/categories/ubuntu-12-04/'>Ubuntu 12.04</a>
+    <a class='category' href='/blog/categories/mysql/'>MySQL</a>, <a class='category' href='/blog/categories/nginx/'>Nginx</a>, <a class='category' href='/blog/categories/ruby/'>Ruby</a>, <a class='category' href='/blog/categories/rubyonrails/'>RubyOnRails</a>, <a class='category' href='/blog/categories/ubuntu-12-dot-04/'>Ubuntu 12.04</a>
   
 </span>
 
 
-    </p>
-    
-      <div class="sharing">
+        </p>
+        
+          <div class="sharing">
   
-  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://cthulhu.github.com/cthulhu/blog/2013/04/19/deployment-of-ruby-on-rails/" data-via="pogrebnyak" data-counturl="http://cthulhu.github.com/cthulhu/blog/2013/04/19/deployment-of-ruby-on-rails/" >Tweet</a>
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://cthulhu.github.com/cthulhu/blog/2013/04/19/deployment-of-ruby-on-rails/" data-via="pogrebnyak" data-counturl="http://cthulhu.github.com/cthulhu/blog/2013/04/19/deployment-of-ruby-on-rails/" >Tweet</a>
   
   
   <div class="g-plusone" data-size="medium"></div>
@@ -263,57 +287,63 @@ mysql -u root -p -e "GRANT ALL PRIVILEGES ON application_production.* TO 'applic
   
 </div>
 
+        
+        
+          <ul class="meta text-muted pager">
+            
+            <li class="previous"><a href="/blog/2013/03/04/elastic-mapreduce-using-streaming-and-ruby/" title="Previous Post: Elastic MapReduce using streaming and ruby">&laquo; Elastic MapReduce using streaming and ruby</a></li>
+            
+            
+            <li class="next"><a href="/blog/2013/05/03/bitcoin-planet/" title="Next Post: Bitcoin planet">Bitcoin planet &raquo;</a></li>
+            
+          </ul>
+        
+      </footer>
+    </article>
     
-    <p class="meta">
-      
-        <a class="basic-alignment left" href="/blog/2013/03/04/elastic-mapreduce-using-streaming-and-ruby/" title="Previous Post: Elastic MapReduce using streaming and ruby">&laquo; Elastic MapReduce using streaming and ruby</a>
-      
-      
-        <a class="basic-alignment right" href="/blog/2013/05/03/bitcoin-planet/" title="Next Post: Bitcoin planet">Bitcoin planet &raquo;</a>
-      
-    </p>
-  </footer>
-</article>
-
-  <section>
-    <h1>Comments</h1>
-    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+      <section>
+        <h1>Comments</h1>
+        <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 </div>
-  </section>
+      </section>
+    
+  </div>
 
-</div>
-
-<aside class="sidebar">
   
-    <section>
-  <h1>Recent Posts</h1>
-  <ul id="recent_posts">
+  <aside class="sidebar col-md-3">
     
-      <li class="post">
-        <a href="/blog/2013/05/03/bitcoin-planet/">Bitcoin planet</a>
-      </li>
+      <section class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title">Recent Posts</h3>
+  </div>
+  
+  <div id="recent_posts" class="list-group">
     
-      <li class="post">
-        <a href="/blog/2013/04/19/deployment-of-ruby-on-rails/">Deployment of Ruby On Rails</a>
-      </li>
+    <a class="list-group-item " href="/blog/2013/11/10/c-star-on-ubuntu-single-node-cluster/">C* on Ubuntu Single-Node Cluster</a>
     
-      <li class="post">
-        <a href="/blog/2013/03/04/elastic-mapreduce-using-streaming-and-ruby/">Elastic MapReduce using streaming and ruby</a>
-      </li>
+    <a class="list-group-item " href="/blog/2013/05/03/bitcoin-planet/">Bitcoin Planet</a>
     
-  </ul>
+    <a class="list-group-item active" href="/blog/2013/04/19/deployment-of-ruby-on-rails/">Deployment of Ruby on Rails</a>
+    
+    <a class="list-group-item " href="/blog/2013/03/04/elastic-mapreduce-using-streaming-and-ruby/">Elastic MapReduce Using Streaming and Ruby</a>
+    
+  </div>
 </section>
 
-<section>
-  <h1>GitHub Repos</h1>
-  <ul id="gh_repos">
-    <li class="loading">Status updating...</li>
-  </ul>
+<section class="panel panel-default clearfix">
+  <div class="panel-heading">
+      <h3 class="panel-title">GitHub Repos</h3>
+  </div>
+  <div class="list-group" id="gh_repos">
+    <p class="loading">Status updating...</p>
+  </div>
   
-  <a href="https://github.com/cthulhu">@cthulhu</a> on GitHub
+    <div class="gh-profile-link pull-right text-muted">
+      <a href="https://github.com/cthulhu">@cthulhu</a> on GitHub
+    </div>
   
   <script type="text/javascript">
-    $.domReady(function(){
+    $(document).ready(function(){
         if (!window.jXHR){
             var jxhr = document.createElement('script');
             jxhr.type = 'text/javascript';
@@ -334,48 +364,43 @@ mysql -u root -p -e "GRANT ALL PRIVILEGES ON application_production.* TO 'applic
 </section>
 
 
-<section>
-  <h1>Latest Tweets</h1>
-  <ul id="tweets">
-    <li class="loading">Status updating...</li>
-  </ul>
-  <script type="text/javascript">
-    $.domReady(function(){
-      getTwitterFeed("pogrebnyak", 5, false);
-    });
-  </script>
-  <script src="/javascripts/twitter.js" type="text/javascript"> </script>
-  
-    <a href="http://twitter.com/pogrebnyak" class="twitter-follow-button" data-show-count="false">Follow @pogrebnyak</a>
-  
-</section>
 
 
-
-<section class="googleplus">
-  <h1>
-    <a href="https://plus.google.com/117105992548096425876?rel=author">
-      <img src="http://www.google.com/images/icons/ui/gprofile_button-32.png" width="32" height="32">
-      Google+
-    </a>
-  </h1>
-</section>
-
-
-
-  
-</aside>
-
-
-    </div>
+<section class="googleplus panel panel-default">
+  <div class="panel-body">
+    <h1>
+      <a href="https://plus.google.com/117105992548096425876?rel=author">
+        <img src="http://www.google.com/images/icons/ui/gprofile_button-32.png" width="32" height="32">
+        Google+
+      </a>
+    </h1>
   </div>
-  <footer role="contentinfo"><p>
-  Copyright &copy; 2013 - Stanislav O. Pogrebnyak -
-  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</section>
+
+
+
+    
+  </aside>
+  
+</div>
+
+        </div>
+      </div>
+    </div>
+    <footer role="contentinfo"><div class="container">
+    <p class="text-muted credits">
+  Copyright &copy; 2013 - Stanislav O. Pogrebnyak<br>
+  <small>
+      <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>,
+      <span class="credit">customized with <a href="https://github.com/kAworu/octostrap3">octostrap3</a></span>.
+  </small>
 </p>
 
+</div>
 </footer>
-  
+    <script src="/javascripts/libs/bootstrap-3.0.0/dist/js/bootstrap.min.js"></script>
+<script src="/javascripts/modernizr-2.0.js"></script>
+
 
 <script type="text/javascript">
       var disqus_shortname = 'io0001';
@@ -388,7 +413,7 @@ mysql -u root -p -e "GRANT ALL PRIVILEGES ON application_production.* TO 'applic
       
     (function () {
       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      dsq.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + disqus_shortname + '.disqus.com/' + disqus_script;
       (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
     }());
 </script>
@@ -412,7 +437,7 @@ mysql -u root -p -e "GRANT ALL PRIVILEGES ON application_production.* TO 'applic
       var twitterWidgets = document.createElement('script');
       twitterWidgets.type = 'text/javascript';
       twitterWidgets.async = true;
-      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
       document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
     })();
   </script>
@@ -421,5 +446,5 @@ mysql -u root -p -e "GRANT ALL PRIVILEGES ON application_production.* TO 'applic
 
 
 
-</body>
+  </body>
 </html>
