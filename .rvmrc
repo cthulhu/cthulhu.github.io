@@ -1,1 +1,1 @@
-rvm use ruby-2.0.0-p247@cthulhu-blog --create
+rvm use ruby-2.1.5@cthulhu-blog --create
